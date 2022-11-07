@@ -1,0 +1,15 @@
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\bin\Debug\net6.0\KonsolowaGraCSA.exe
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\bin\Debug\net6.0\KonsolowaGraCSA.deps.json
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\bin\Debug\net6.0\KonsolowaGraCSA.runtimeconfig.json
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\bin\Debug\net6.0\KonsolowaGraCSA.dll
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\bin\Debug\net6.0\KonsolowaGraCSA.pdb
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\KonsolowaGraCSA.csproj.AssemblyReference.cache
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\KonsolowaGraCSA.GeneratedMSBuildEditorConfig.editorconfig
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\KonsolowaGraCSA.AssemblyInfoInputs.cache
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\KonsolowaGraCSA.AssemblyInfo.cs
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\KonsolowaGraCSA.csproj.CoreCompileInputs.cache
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\KonsolowaGraCSA.dll
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\refint\KonsolowaGraCSA.dll
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\KonsolowaGraCSA.pdb
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\KonsolowaGraCSA.genruntimeconfig.cache
+D:\STUDIA\0.INF\I7. Zastosowania sztucznej inteligencji\Modul 3 program\KonsolowaGraCSA\KonsolowaGraCSA\obj\Debug\net6.0\ref\KonsolowaGraCSA.dll
