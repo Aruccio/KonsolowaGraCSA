@@ -8,93 +8,86 @@ namespace KonsolowaGraCSA
 {
     internal class Player
     {
-        public int a; //dlug
-        public int b; //wys
-        public int pkt;
-        public int moves;
-        private string symbol;
-        private string name;
-
         public Player()
         {
-            a = 0;
-            b = 0;
-            moves = 0;
-            symbol = "*";
-            name = "??";
+            X = 0;
+            Y = 0;
+            Points = 0;
+            Moves = 0;
+            Symbol = "*";
+            Name = "??";
         }
 
         public Player(int x, int y)
         {
-            a = x;
-            b = y;
-            pkt = 0;
-            moves = 0;
-            symbol = "*";
-            name = "??";
+            X = x;
+            Y = y;
+            Points = 0;
+            Moves = 0;
+            Symbol = "*";
+            Name = "??";
         }
 
         public Player(int x, int y, string symbol)
         {
-            a = x;
-            b = y;
-            pkt = 0;
-            moves = 0;
-            this.symbol = symbol;
-            name = "??";
+            X = x;
+            Y = y;
+            Points = 0;
+            Moves = 0;
+            Symbol = symbol;
+            Name = "??";
         }
 
         public Player(int x, int y, string symbol, string name)
         {
-            a = x;
-            b = y;
-            pkt = 0;
-            moves = 0;
-            this.symbol = symbol;
-            this.name = name;
+            X = x;
+            Y = y;
+            Points = 0;
+            Moves = 0;
+            Symbol = symbol;
+            Name = name;
         }
 
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get; set;
         }
         public string Symbol //zmienna symbol upubliczniona za pomocą akcesorów
         {
-            get { return symbol; }
-            set { symbol = value; }
+            get; set;
         }
 
         public int Moves //zmienna Moves upubliczniona za pomocą akcesorów
         {
-            get { return moves; }
-            set { moves = value; }
+            get; set;
         }
         public int Points //zmienna Points upubliczniona za pomocą akcesorów
         {
-            get { return pkt; }
-            set { pkt = value; }
+            get; set;
+        }
+        public int X
+        {
+            get; set;
+        }
+        public int Y
+        {
+            get; set;
         }
 
         public void Wspolrzedne(int x, int y)
         {
-            a = x;
-            b = y;
-        }
-
-        public int IloscPunktow()
-        {
-            return pkt;
+            X = x;
+            Y = y;
         }
 
         public void AddPoint() //dodaje punkty
         {
-            pkt++;
+            Points++;
         }
 
         public void AddMove() //dodaje sumę ruchów wszystkich graczy
         {
-            moves++;
+            Moves++;
         }
 
     }

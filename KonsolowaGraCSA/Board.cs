@@ -84,7 +84,7 @@ namespace KonsolowaGraCSA
 
         public void SetPlayerPosition(Player player)
         {
-            board[player.a, player.b] = player.Symbol;
+            board[player.X, player.Y] = player.Symbol;
         }
 
         public int Dlug()
@@ -147,7 +147,7 @@ namespace KonsolowaGraCSA
 
         public void MovePlayer(Player player, int xNew, int yNew)
         {
-            board[player.a, player.b] = " ";
+            board[player.X, player.Y] = " ";
             player.Wspolrzedne(xNew, yNew);
             board[xNew, yNew] = player.Symbol;
         }
@@ -372,9 +372,9 @@ namespace KonsolowaGraCSA
         public void Go(Player gracz, Cuckoo kukulka)
         {
             if (endGame) return;
-            int a = gracz.a;
-            int b = gracz.b;
-            board[gracz.a, gracz.b] = gracz.Symbol;
+            int a = gracz.X;
+            int b = gracz.Y;
+            board[gracz.X, gracz.Y] = gracz.Symbol;
             ShowBoard();
             ShowStats(kukulka, gracz, 4);
             if (CheckIfItIsEnd() && gracz.Points > Math.Ceiling((decimal)(enemy / 2)))
