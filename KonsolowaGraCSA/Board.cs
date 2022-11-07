@@ -8,74 +8,72 @@ namespace KonsolowaGraCSA
 {
     internal class Board
     {
-        public int dlug;
-        public int wys;
-        public int points;
         public int ruchy1 = 0;
         private Random rnd;
-        private int enemy;
         public string[,] board;
         private bool endGame;
         private string winner = "";
-        private List<Enemy> enemies;
         public Player player = new Player();
 
-        public Board(int dlug, int wys, int mmm)
+        public Board(int width, int height, int numberOfHashes)
         {
-            this.dlug = dlug;
-            this.wys = wys;
-            enemies = new List<Enemy>();
-            points = 0;
+            Width = width;
+            Height = height;
+            Hashes = new List<Hash>();
+            Points = 0;
             rnd = new Random();
             endGame = false;
-            board = new string[dlug, wys];
-            enemy = rnd.Next(1, Convert.ToInt32(Math.Sqrt(dlug + wys)));
+            board = new string[width, height];
             CreateEmptyBoard(); //tworzymy plansze
-            SetEnemy(mmm);
+            SetEnemy(numberOfHashes);
         }
 
-        public void SetEnemy()
+        public int Width
         {
-            for (int i = 0; i < enemy; i++)
+            get; set;
+        }
+
+        public int Height
+        {
+            get; set;
+        }
+
+        public int Points { get; set; }
+
+        public void SetEnemy(int numberOfHashes)
+        {
+            int i = 0;
+            while (i < numberOfHashes)
             {
-                int a = rnd.Next(0, dlug - 1);
-                int b = rnd.Next(0, wys);
-                if (board[rnd.Next(1, dlug - 1), rnd.Next(1, wys - 1)] != "#")
-                    board[rnd.Next(1, dlug - 1), rnd.Next(1, wys - 1)] = "#";
-                enemies.Add(new Enemy(new int[] { a, b }, "#"));
+                int a = rnd.Next(0, Width);
+                int b = rnd.Next(0, Height);
+                if (board[a, b] != "#")
+                {
+                    board[a, b] = "#";
+                    Hashes.Add(new Hash(new int[] { a, b }, "#"));
+                    i++;
+                }
             }
         }
 
         private void UpdateEnemies()
         {
-            enemies.Clear();
-            for (int i = 0; i < dlug; i++)
+            Hashes.Clear();
+            for (int i = 0; i < Width; i++)
             {
-                for (int j = 0; j < wys; j++)
+                for (int j = 0; j < Height; j++)
                 {
                     if (board[i, j] == "#")
-                        enemies.Add(new Enemy(new int[] { i, j }, "#"));
+                        Hashes.Add(new Hash(new int[] { i, j }, "#"));
                 }
-            }
-        }
-
-        public void SetEnemy(int noEnemy)
-        {
-            for (int i = 0; i < noEnemy; i++)
-            {
-                int a = rnd.Next(1, dlug - 1);
-                int b = rnd.Next(1, wys - 1);
-                if (board[a, b] != "#")
-                    board[a, b] = "#";
-                enemies.Add(new Enemy(new int[] { a, b }, "#"));
             }
         }
 
         private void CreateEmptyBoard()
         {
-            for (int i = 0; i < dlug; i++)
+            for (int i = 0; i < Width; i++)
             {
-                for (int j = 0; j < wys; j++)
+                for (int j = 0; j < Height; j++)
                 {
                     board[i, j] = " ";
                 }
@@ -87,31 +85,14 @@ namespace KonsolowaGraCSA
             board[player.X, player.Y] = player.Symbol;
         }
 
-        public int Dlug()
-        {
-            return dlug;
-        }
-
         public string Winner()
         {
             return winner;
         }
 
-        public int Wys()
+        public List<Hash> Hashes
         {
-            return wys;
-        }
-
-        public int Points
-        {
-            get { return points; }
-            set { points = value; }
-        }
-
-        public List<Enemy> Enemies
-        {
-            get { return enemies; }
-            set { enemies = value; }
+            get; set;
         }
 
         public bool EndGame
@@ -122,9 +103,9 @@ namespace KonsolowaGraCSA
         public void ShowBoard()
         {
             Reset();
-            for (int i = 0; i < dlug; i++)
+            for (int i = 0; i < Width; i++)
             {
-                for (int j = 0; j < wys; j++)
+                for (int j = 0; j < Height; j++)
                 {
                     Console.Write(board[i, j]);
                 }
@@ -135,9 +116,9 @@ namespace KonsolowaGraCSA
 
         private bool CheckIfItIsEnd()
         {
-            for (int i = 0; i < dlug; i++)
+            for (int i = 0; i < Width; i++)
             {
-                for (int j = 0; j < wys; j++)
+                for (int j = 0; j < Height; j++)
                 {
                     if (board[i, j] == "#") return false;
                 }
@@ -148,7 +129,8 @@ namespace KonsolowaGraCSA
         public void MovePlayer(Player player, int xNew, int yNew)
         {
             board[player.X, player.Y] = " ";
-            player.Wspolrzedne(xNew, yNew);
+            player.X = xNew;
+            player.Y = yNew;
             board[xNew, yNew] = player.Symbol;
         }
 
@@ -157,7 +139,7 @@ namespace KonsolowaGraCSA
             board[x, y] = " ";
         }
 
-        private void ShowStats(Cuckoo k1, Player g1, int flag)
+        private void ShowStats(Enemy k1, Player g1, int flag)
         {
             switch (flag)
             {
@@ -173,9 +155,9 @@ namespace KonsolowaGraCSA
                 case 2: //wygrał komputer
                     Reset();
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.WriteLine("Gracz " + k1.name + " wygrał!");
+                    Console.WriteLine("Gracz " + k1.Name + " wygrał!");
                     Console.ResetColor();
-                    winner = "Cuckoo";
+                    winner = "Enemy";
                     StatsDuringGame(k1, g1);
                     break;
 
@@ -190,7 +172,7 @@ namespace KonsolowaGraCSA
             }
         }
 
-        private void StatsDuringGame(Cuckoo k1, Player g1)
+        private void StatsDuringGame(Enemy k1, Player g1)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Punkty (komputera) -- " + k1.Points);
@@ -208,7 +190,7 @@ namespace KonsolowaGraCSA
             Console.ResetColor();
         }
 
-        public void GoCuckoo(Cuckoo kukulka, Player gracz)
+        public void GoCuckoo(Enemy kukulka, Player gracz)
         {
             if (endGame) return;
 
@@ -218,28 +200,23 @@ namespace KonsolowaGraCSA
             ShowBoard();
             if (board[a, b] == "#") kukulka.AddPoint();
             ShowStats(kukulka, gracz, 4);
-            if (CheckIfItIsEnd() && kukulka.Points >= Math.Ceiling((decimal)(enemy / 2)))
+            if (CheckIfItIsEnd() && kukulka.Points >= Math.Ceiling((decimal)(Hashes.Count / 2)))
             {
                 endGame = true;
                 ShowStats(kukulka, gracz, 2);
             }
 
-            // else if (CheckIfItIsEnd() && kukulka.Points == Math.Ceiling((decimal)(enemy / 2)))
-            // {
-            //     Remis();
-            // }
-
             kukulka.Destroy();
             UpdateEnemies();
 
-            int[] destiny = kukulka.Run(board, enemies);
+            int[] destiny = kukulka.Run(board, Hashes);
 
             List<int[]> possMoves = new List<int[]>();
 
-            if (b + 1 < wys && b + 1 > -1) possMoves.Add(new int[] { a, b + 1 }); //góra
-            if (b > 0 && b - 1 < wys) possMoves.Add(new int[] { a, b - 1 }); //dół
-            if (a + 1 < dlug && a + 1 > -1) possMoves.Add(new int[] { a + 1, b });  //prawo
-            if (a - 1 < dlug && a - 1 > 0) possMoves.Add(new int[] { a - 1, b });//lewo
+            if (b + 1 < Height && b + 1 > -1) possMoves.Add(new int[] { a, b + 1 }); //góra
+            if (b > 0 && b - 1 < Height) possMoves.Add(new int[] { a, b - 1 }); //dół
+            if (a + 1 < Width && a + 1 > -1) possMoves.Add(new int[] { a + 1, b });  //prawo
+            if (a - 1 < Width && a - 1 > 0) possMoves.Add(new int[] { a - 1, b });//lewo
 
             ShowBoard();
             int index = 0;
@@ -268,7 +245,7 @@ namespace KonsolowaGraCSA
 
             kukulka.AddMove();
 
-            if (possMoves[index][0] < dlug && possMoves[index][0] > 0 && possMoves[index][1] < wys && possMoves[index][0] > 0 && board[possMoves[index][0], possMoves[index][1]] == "#")
+            if (possMoves[index][0] < Width && possMoves[index][0] > 0 && possMoves[index][1] < Height && possMoves[index][0] > 0 && board[possMoves[index][0], possMoves[index][1]] == "#")
             {
                 kukulka.AddPoint();
                 board[a, b] = " ";
@@ -281,14 +258,14 @@ namespace KonsolowaGraCSA
             else
             {
                 bool f = false;
-                if (b > 0 && b - 1 < wys && a + 1 < dlug && a + 1 > -1) possMoves.Add(new int[] { a + 1, b - 1 }); //prawo dół
-                if (b + 1 < wys && b + 1 > 0 && a + 1 < dlug && a + 1 > -1) possMoves.Add(new int[] { a + 1, b + 1 });  //prawo góra
-                if (b > 0 && b - 1 < wys && a - 1 < dlug && a - 1 > 0) possMoves.Add(new int[] { a - 1, b - 1 }); //lewo dół
-                if (b + 1 < wys && b + 1 > 0 && a - 1 < dlug && a - 1 > 0) possMoves.Add(new int[] { a - 1, b + 1 });  //prawo góra
+                //if (b > 0 && b - 1 < height && a + 1 < width && a + 1 > -1) possMoves.Add(new int[] { a + 1, b - 1 }); //prawo dół
+                //if (b + 1 < height && b + 1 > 0 && a + 1 < width && a + 1 > -1) possMoves.Add(new int[] { a + 1, b + 1 });  //prawo góra
+                //if (b > 0 && b - 1 < height && a - 1 < width && a - 1 > 0) possMoves.Add(new int[] { a - 1, b - 1 }); //lewo dół
+                //if (b + 1 < height && b + 1 > 0 && a - 1 < width && a - 1 > 0) possMoves.Add(new int[] { a - 1, b + 1 });  //prawo góra
 
                 for (int i = 4; i < 8; i++)
                 {
-                    if (possMoves[index][0] < dlug && possMoves[index][0] > 0 && possMoves[index][1] < wys && possMoves[index][0] > 0 && board[possMoves[index][0], possMoves[index][1]] == "#")
+                    if (possMoves[index][0] < Width && possMoves[index][0] > 0 && possMoves[index][1] < Height && possMoves[index][0] > 0 && board[possMoves[index][0], possMoves[index][1]] == "#")
                     {
                         f = true;
                         if (i == 4 || i == 5)
@@ -340,7 +317,7 @@ namespace KonsolowaGraCSA
                             }
                         }
                     }
-                    if (possMoves[index][0] < dlug && possMoves[index][0] > 0 && possMoves[index][1] < wys && possMoves[index][0] > 0)
+                    if (possMoves[index][0] < Width && possMoves[index][0] > 0 && possMoves[index][1] < Height && possMoves[index][0] > 0)
                     {
                         board[a, b] = " ";
                         a = possMoves[index][0];
@@ -357,7 +334,7 @@ namespace KonsolowaGraCSA
             ShowBoard();
             ShowStats(kukulka, gracz, 4);
 
-            if (CheckIfItIsEnd() && kukulka.Points > Math.Ceiling((decimal)(enemy / 2)))
+            if (CheckIfItIsEnd() && kukulka.Points > Math.Ceiling((decimal)(Hashes.Count / 2)))
             {
                 endGame = true;
                 ShowStats(kukulka, gracz, 2);
@@ -369,7 +346,7 @@ namespace KonsolowaGraCSA
             Console.Clear();
         }
 
-        public void Go(Player gracz, Cuckoo kukulka)
+        public void Go(Player gracz, Enemy kukulka)
         {
             if (endGame) return;
             int a = gracz.X;
@@ -377,12 +354,12 @@ namespace KonsolowaGraCSA
             board[gracz.X, gracz.Y] = gracz.Symbol;
             ShowBoard();
             ShowStats(kukulka, gracz, 4);
-            if (CheckIfItIsEnd() && gracz.Points > Math.Ceiling((decimal)(enemy / 2)))
+            if (CheckIfItIsEnd() && gracz.Points > Math.Ceiling((decimal)(Hashes.Count / 2)))
             {
                 endGame = true;
                 ShowStats(kukulka, gracz, 1);
             }
-            else if (CheckIfItIsEnd() && gracz.Points == Math.Ceiling((decimal)(enemy / 2)))
+            else if (CheckIfItIsEnd() && gracz.Points == Math.Ceiling((decimal)(Hashes.Count / 2)))
             {
                 ShowStats(kukulka, gracz, 3);
             }
@@ -392,7 +369,7 @@ namespace KonsolowaGraCSA
             {
                 case ConsoleKey.RightArrow:
 
-                    if (b + 1 > -1 && b + 1 < wys)
+                    if (b + 1 > -1 && b + 1 < Height)
                     {
                         Reset();
                         ClearArea(a, b);
@@ -407,7 +384,7 @@ namespace KonsolowaGraCSA
 
                 case ConsoleKey.DownArrow:
 
-                    if (a >= 0 && a < dlug - 1)
+                    if (a >= 0 && a < Width - 1)
                     {
                         Reset();
                         ClearArea(a, b);
@@ -421,7 +398,7 @@ namespace KonsolowaGraCSA
                     break;
 
                 case ConsoleKey.UpArrow:
-                    if (a > 0 && a - 1 < dlug)
+                    if (a > 0 && a - 1 < Width)
                     {
                         gracz.AddMove();
                         Reset();
@@ -435,7 +412,7 @@ namespace KonsolowaGraCSA
                     break;
 
                 case ConsoleKey.LeftArrow:
-                    if (b - 1 > -1 && b - 1 < wys)
+                    if (b - 1 > -1 && b - 1 < Height)
                     {
                         Reset();
                         ClearArea(a, b);
@@ -455,7 +432,7 @@ namespace KonsolowaGraCSA
 
                 default: break;
             }
-            if (CheckIfItIsEnd() && gracz.Points > Math.Ceiling((decimal)(enemy / 2)))
+            if (CheckIfItIsEnd() && gracz.Points > Math.Ceiling((decimal)(Hashes.Count / 2)))
             {
                 endGame = true;
                 ShowStats(kukulka, gracz, 1);

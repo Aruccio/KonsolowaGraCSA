@@ -65,6 +65,7 @@ namespace KonsolowaGraCSA
         {
             get; set;
         }
+
         public int X
         {
             get; set;
@@ -72,12 +73,6 @@ namespace KonsolowaGraCSA
         public int Y
         {
             get; set;
-        }
-
-        public void Wspolrzedne(int x, int y)
-        {
-            X = x;
-            Y = y;
         }
 
         public void AddPoint() //dodaje punkty
