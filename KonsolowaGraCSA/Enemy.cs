@@ -1,6 +1,6 @@
 ﻿namespace KonsolowaGraCSA
 {
-    internal class Enemy
+    public class Enemy
     {
         //czyli kukulki
         private List<int[]> population;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KonsolowaGraCSA
 {
-    internal class Player
+    public class Player
     {
         public Player()
         {

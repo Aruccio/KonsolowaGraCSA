@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KonsolowaGraCSA
 {
-    internal class Hash
+    public class Hash
     {
         public Hash(int[] coordinates, string symbol)
         {
