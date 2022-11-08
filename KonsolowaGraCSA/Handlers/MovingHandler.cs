@@ -21,25 +21,35 @@ namespace KonsolowaGraCSA
             this.cuckooHandler = cuckooHandler;
         }
 
-        public void GoCuckoo(Enemy enemy, Player gracz)
+        public void BeforeStartSet(Player player, Enemy enemy)
+        {
+            board.boardTable[enemy.X, enemy.Y] = enemy.Symbol;
+            board.boardTable[player.X, player.Y] = player.Symbol;
+
+        }
+
+        public void GoCuckoo(Enemy enemy, Player player)
         {
             if (boardHandler.EndGame) return;
 
             int a = enemy.X;
             int b = enemy.Y;
-
             boardHandler.ShowBoard();
-            if (board.boardTable[a, b] == "#") enemy.AddPoint();
-            boardHandler.ShowStats(enemy, gracz, 4);
+            if (board.boardTable[a, b] == "#")
+            {
+                enemy.AddPoint();
+            }
+
+            boardHandler.ShowStats(enemy, player, 4);
             if (boardHandler.CheckIfItIsEnd()
                 && enemy.Points >= Math.Ceiling((decimal)(board.Hashes.Count / 2)))
             {
                 boardHandler.EndGame = true;
-                boardHandler.ShowStats(enemy, gracz, 2);
+                boardHandler.ShowStats(enemy, player, 2);
             }
 
             cuckooHandler.Destroy();
-            boardHandler.UpdateEnemies();
+            boardHandler.UpdateHashes();
 
             int[] destiny = cuckooHandler.Run(board.boardTable, board.Hashes);
 
@@ -169,33 +179,35 @@ namespace KonsolowaGraCSA
 
             }
             boardHandler.ShowBoard();
-            boardHandler.ShowStats(enemy, gracz, 4);
+            boardHandler.ShowStats(enemy, player, 4);
 
             if (boardHandler.CheckIfItIsEnd() && enemy.Points > Math.Ceiling((decimal)(board.Hashes.Count / 2)))
             {
                 boardHandler.EndGame = true;
-                boardHandler.ShowStats(enemy, gracz, 2);
+                boardHandler.ShowStats(enemy, player, 2);
             }
         }
 
-        public void Go(Player gracz, Enemy kukulka)
+        public void Go(Player player, Enemy enemy)
         {
             if (boardHandler.EndGame) return;
-            int a = gracz.X;
-            int b = gracz.Y;
-            board.boardTable[gracz.X, gracz.Y] = gracz.Symbol;
+            int a = player.X;
+            int b = player.Y;
+            board.boardTable[player.X, player.Y] = player.Symbol;
+            board.boardTable[enemy.X, enemy.Y] = enemy.Symbol;
+
             boardHandler.ShowBoard();
-            boardHandler.ShowStats(kukulka, gracz, 4);
+            boardHandler.ShowStats(enemy, player, 4);
             if (boardHandler.CheckIfItIsEnd()
-                && gracz.Points > Math.Ceiling((decimal)(board.Hashes.Count / 2)))
+                && player.Points > Math.Ceiling((decimal)(board.Hashes.Count / 2)))
             {
                 boardHandler.EndGame = true;
-                boardHandler.ShowStats(kukulka, gracz, 1);
+                boardHandler.ShowStats(enemy, player, 1);
             }
             else if (boardHandler.CheckIfItIsEnd()
-                && gracz.Points == Math.Ceiling((decimal)(board.Hashes.Count / 2)))
+                && player.Points == Math.Ceiling((decimal)(board.Hashes.Count / 2)))
             {
-                boardHandler.ShowStats(kukulka, gracz, 3);
+                boardHandler.ShowStats(enemy, player, 3);
             }
             ConsoleKeyInfo key = Console.ReadKey();
 
@@ -207,12 +219,9 @@ namespace KonsolowaGraCSA
                     {
                         boardHandler.Reset();
                         boardHandler.ClearArea(a, b);
-                        gracz.AddMove();
+                        player.AddMove();
                         b += 1;
-                        boardHandler.MovePlayer(gracz, a, b);
-                        if (board.boardTable[a, b] == "#") gracz.AddPoint();
-                        boardHandler.ShowBoard();
-                        boardHandler.ShowStats(kukulka, gracz, 4);
+                        MakeMoveAndUpdateGameForPlayer(player, enemy, a, b);
                     }
                     break;
 
@@ -223,40 +232,30 @@ namespace KonsolowaGraCSA
                         boardHandler.Reset();
                         boardHandler.ClearArea(a, b);
                         a += 1;
-                        gracz.AddMove();
-                        boardHandler.MovePlayer(gracz, a, b);
-                        if (board.boardTable[a, b] == "#") gracz.AddPoint();
-                        boardHandler.ShowBoard();
-                        boardHandler.ShowStats(kukulka, gracz, 4);
+                        player.AddMove();
+                        MakeMoveAndUpdateGameForPlayer(player, enemy, a, b);
                     }
                     break;
 
                 case ConsoleKey.UpArrow:
                     if (a > 0 && a - 1 < board.Width)
                     {
-                        gracz.AddMove();
+                        player.AddMove();
                         boardHandler.Reset();
                         boardHandler.ClearArea(a, b);
                         a -= 1;
-                        boardHandler.MovePlayer(gracz, a, b);
-                        if (board.boardTable[a, b] == "#") gracz.AddPoint();
-                        boardHandler.ShowBoard();
-                        boardHandler.ShowStats(kukulka, gracz, 4);
+                        MakeMoveAndUpdateGameForPlayer(player, enemy, a, b);
                     }
                     break;
 
                 case ConsoleKey.LeftArrow:
                     if (b - 1 > -1 && b - 1 < board.Height)
                     {
+                        player.AddMove();
                         boardHandler.Reset();
                         boardHandler.ClearArea(a, b);
-                        gracz.AddMove();
                         b -= 1;
-                        if (board.boardTable[a, b] == "#") gracz.AddPoint();
-                        boardHandler.MovePlayer(gracz, a, b);
-                        boardHandler.ShowBoard();
-                        boardHandler.ShowStats(kukulka, gracz, 4);
-
+                        MakeMoveAndUpdateGameForPlayer(player, enemy, a, b);
                     }
                     break;
 
@@ -266,11 +265,22 @@ namespace KonsolowaGraCSA
 
                 default: break;
             }
-            if (boardHandler.CheckIfItIsEnd() && gracz.Points > Math.Ceiling((decimal)(board.Hashes.Count / 2)))
+            if (boardHandler.CheckIfItIsEnd() && player.Points > Math.Ceiling((decimal)(board.Hashes.Count / 2)))
             {
                 boardHandler.EndGame = true;
-                boardHandler.ShowStats(kukulka, gracz, 1);
+                boardHandler.ShowStats(enemy, player, 1);
             }
+        }
+
+        public void MakeMoveAndUpdateGameForPlayer(Player player, Enemy enemy, int x, int y)
+        {
+            if (board.boardTable[x, y] == "#")
+            {
+                player.AddPoint();
+            }
+            boardHandler.MovePlayer(player, x, y);
+            boardHandler.ShowBoard();
+            boardHandler.ShowStats(enemy, player, 4);
         }
 
     }

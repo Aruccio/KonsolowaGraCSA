@@ -19,7 +19,7 @@ namespace KonsolowaGraCSA
             this.board = board;
             random = new Random();
             CreateEmptyBoard(); //tworzymy plansze
-            SetEnemy(numberOfHashes);
+            SetHashes(numberOfHashes);
         }
 
         public void Reset()
@@ -27,7 +27,7 @@ namespace KonsolowaGraCSA
             Console.Clear();
         }
 
-        public void SetEnemy(int numberOfHashes)
+        public void SetHashes(int numberOfHashes)
         {
             int i = 0;
             while (i < numberOfHashes)
@@ -43,7 +43,7 @@ namespace KonsolowaGraCSA
             }
         }
 
-        public void UpdateEnemies()
+        public void UpdateHashes()
         {
             board.Hashes.Clear();
             for (int i = 0; i < board.Width; i++)

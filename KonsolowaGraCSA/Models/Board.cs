@@ -9,9 +9,7 @@ namespace KonsolowaGraCSA
 {
     public class Board
     {
-        public int ruchy1 = 0;
         public string[,] boardTable;
-        public Player player = new Player();
 
         public Board(int width, int height, int numberOfHashes)
         {
