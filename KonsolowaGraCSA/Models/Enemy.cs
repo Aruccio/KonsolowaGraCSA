@@ -1,6 +1,4 @@
-﻿using KonsolowaGraCSA.Models;
-
-namespace KonsolowaGraCSA
+﻿namespace KonsolowaGraCSA.Models
 {
     public class Enemy
     {
