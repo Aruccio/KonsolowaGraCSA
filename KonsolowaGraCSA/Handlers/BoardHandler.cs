@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KonsolowaGraCSA.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,9 +34,9 @@ namespace KonsolowaGraCSA
             {
                 int a = random.Next(0, board.Width);
                 int b = random.Next(0, board.Height);
-                if (board.board[a, b] != "#")
+                if (board.boardTable[a, b] != "#")
                 {
-                    board.board[a, b] = "#";
+                    board.boardTable[a, b] = "#";
                     board.Hashes.Add(new Hash(new int[] { a, b }, "#"));
                     i++;
                 }
@@ -49,7 +50,7 @@ namespace KonsolowaGraCSA
             {
                 for (int j = 0; j < board.Height; j++)
                 {
-                    if (board.board[i, j] == "#")
+                    if (board.boardTable[i, j] == "#")
                         board.Hashes.Add(new Hash(new int[] { i, j }, "#"));
                 }
             }
@@ -61,14 +62,9 @@ namespace KonsolowaGraCSA
             {
                 for (int j = 0; j < board.Height; j++)
                 {
-                    board.board[i, j] = " ";
+                    board.boardTable[i, j] = " ";
                 }
             }
-        }
-
-        public void SetPlayerPosition(Player player)
-        {
-            board.board[player.X, player.Y] = player.Symbol;
         }
 
         public void ShowBoard()
@@ -78,7 +74,7 @@ namespace KonsolowaGraCSA
             {
                 for (int j = 0; j < board.Height; j++)
                 {
-                    Console.Write(board.board[i, j]);
+                    Console.Write(board.boardTable[i, j]);
                 }
 
                 Console.WriteLine();
@@ -91,7 +87,7 @@ namespace KonsolowaGraCSA
             {
                 for (int j = 0; j < board.Height; j++)
                 {
-                    if (board.board[i, j] == "#") return false;
+                    if (board.boardTable[i, j] == "#") return false;
                 }
             }
             return true;
@@ -99,15 +95,15 @@ namespace KonsolowaGraCSA
 
         public void MovePlayer(Player player, int xNew, int yNew)
         {
-            board.board[player.X, player.Y] = " ";
+            board.boardTable[player.X, player.Y] = " ";
             player.X = xNew;
             player.Y = yNew;
-            board.board[xNew, yNew] = player.Symbol;
+            board.boardTable[xNew, yNew] = player.Symbol;
         }
 
         public void ClearArea(int x, int y)
         {
-            board.board[x, y] = " ";
+            board.boardTable[x, y] = " ";
         }
 
         public void ShowStats(Enemy k1, Player g1, int flag)

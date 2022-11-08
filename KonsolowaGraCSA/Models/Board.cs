@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KonsolowaGraCSA.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,7 @@ namespace KonsolowaGraCSA
     public class Board
     {
         public int ruchy1 = 0;
-        private Random rnd;
-        public string[,] board;
+        public string[,] boardTable;
         public Player player = new Player();
 
         public Board(int width, int height, int numberOfHashes)
@@ -19,8 +19,7 @@ namespace KonsolowaGraCSA
             Height = height;
             Hashes = new List<Hash>();
             Points = 0;
-            rnd = new Random();
-            board = new string[width, height];
+            boardTable = new string[width, height];
         }
 
         public int Width
@@ -33,7 +32,10 @@ namespace KonsolowaGraCSA
             get; set;
         }
 
-        public int Points { get; set; }
+        public int Points
+        {
+            get; set;
+        }
 
         public List<Hash> Hashes
         {
