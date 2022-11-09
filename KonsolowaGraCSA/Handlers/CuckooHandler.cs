@@ -35,11 +35,6 @@ namespace KonsolowaGraCSA.Handlers
 
         public void Generate()
         {
-            /*int xmin = x-dlug/4<0 ? 0 : Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(x-dlug/6))) ;
-            int xmax = x + dlug / 4 > dlug ? dlug : Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(x + dlug / 6)));
-            int ymin = x - wys / 4 < 0 ? 0 : Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(y - dlug / 6)));
-            int ymax = x + wys / 4 > wys ? wys : Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(y + dlug /6)));
-            */
             for (int i = 0; i < populationSize; i++)
             {
                 int tmp1 = rnd.Next(0, boardWidth);
@@ -74,13 +69,10 @@ namespace KonsolowaGraCSA.Handlers
             return b;
         }
 
-        public int[] HostDecision(int[] a, string[,] board) //nowe współzędne się nadają albo nie
+        public int[] HostDecision(int[] a, string[,] board)
         {
             if (rnd.Next(0, 100) < 50) return new int[2] { rnd.Next(0, boardWidth), rnd.Next(0, boardHeight) };
             else return a;
-            //int[] b = new int[2] { rnd.Next(0, dlug) , rnd.Next(0, wys) };
-            //if (Host(4, a, boardTable) < Host(4, b, boardTable)) return b;
-            //else return a;
         }
 
         public int Host(int neighneighborhoodSize, int[] p, string[,] board)
@@ -100,7 +92,7 @@ namespace KonsolowaGraCSA.Handlers
             return counter;
         }
 
-        public double FitnessFunction(int[] p1, int[] p2, string[,] board) //liczy odległość. i jesli # to zmniejsza
+        public double FitnessFunction(int[] p1, int[] p2, string[,] board)
         {
             double dist = DistanceFunctions.Euclidean(p1, p2);//Maximum(p1, p2);
 
@@ -147,7 +139,7 @@ namespace KonsolowaGraCSA.Handlers
             hashes.Clear();
         }
 
-        public int[] Run(string[,] board, List<Hash> enemies) //znajduje cel podrozy gracza
+        public int[] Run(string[,] board, List<Hash> enemies)
         {
             Generate();
             this.hashes = enemies;

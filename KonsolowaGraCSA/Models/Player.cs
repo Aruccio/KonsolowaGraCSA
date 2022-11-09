@@ -52,16 +52,16 @@ namespace KonsolowaGraCSA.Models
         {
             get; set;
         }
-        public string Symbol //zmienna symbol upubliczniona za pomocą akcesorów
+        public string Symbol
         {
             get; set;
         }
 
-        public int Moves //zmienna Moves upubliczniona za pomocą akcesorów
+        public int Moves
         {
             get; set;
         }
-        public int Points //zmienna Points upubliczniona za pomocą akcesorów
+        public int Points
         {
             get; set;
         }
@@ -75,12 +75,12 @@ namespace KonsolowaGraCSA.Models
             get; set;
         }
 
-        public void AddPoint() //dodaje punkty
+        public void AddPoint()
         {
             Points++;
         }
 
-        public void AddMove() //dodaje sumę ruchów wszystkich graczy
+        public void AddMove()
         {
             Moves++;
         }
